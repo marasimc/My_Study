@@ -45,9 +45,13 @@ if __name__ == '__main__':
     hWnd_location, hWnd = get_window_pos('同花顺(v8.90.91) - 1号方案')   ## '同花顺(v8.90.91) - 1号方案'为待获取句柄的名字
 
     print(hWnd_location)
-	#将程序界面置顶
+	# 将程序界面置顶
     win32gui.SendMessage(hWnd, win32con.WM_SYSCOMMAND, win32con.SC_RESTORE, 0)  # 这句很重要，这句可以保证将句柄置到前端
     win32gui.SetForegroundWindow(hWnd)
+    
+    # 最大化程序界面
+    win32gui.ShowWindow(hWnd, win32con.SW_SHOWMAXIMIZED)
+    # win32gui.ShowWindow(hWnd, win32con.SW_SHOWMINIMIZED)    # 最小化程序界面
 
     time.sleep(1)
     window_capture(hWnd, "1.png")
