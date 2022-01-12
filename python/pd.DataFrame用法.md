@@ -39,7 +39,7 @@ for index, row in df.iterrows():
 '''    
 
 # 对于每一行，通过列名name访问对应的元素
-for row in df.iterrows():
+for index, row in df.iterrows():
     print(row['c1'], row['c2'])     # 输出每一行
 '''
 10   100
@@ -55,21 +55,66 @@ for row in df.itertuples():
     print(getattr(row, 'c1'), getattr(row, 'c2')) # 输出每一行
 ```
 
-- iteritems():按列遍历，将DataFrame的每一列迭代为(列名, Series)对，可以通过row[index]对元素进行访问。
+- iteritems():按列遍历，将DataFrame的每一列迭代为(列名, Series)对。
 
 ```python
-for index, row in df.iteritems():
+for col_index, col_values in df.iteritems():
     print(index)                    # 输出列名
 '''
 c1
 c2
 '''    
 
-for row in df.iteritems():
-    print(row[0], row[1], row[2])   # 输出各列   
+for col_index, col_values in df.iteritems():
+    print(col_values)   # 输出各列   
 '''
 10 11 12
 100 110 123
 '''    
+```
+
+# 3. df使用map(),apply(),applymap()函数
+
+```python
+'''① map()函数'''
+#i. 使用字典进行映射，把数据集中gender列的男替换为1，女替换为0
+data["gender"] = data["gender"].map({"男":1, "女":0})
+
+
+#ii.使用函数，把数据集中gender列的男替换为1，女替换为0
+def gender_map(x):
+    gender = 1 if x == "男" else 0
+    return gender
+#注意这里传入的是函数名，不带括号
+data["gender"] = data["gender"].map(gender_map)
+```
+
+```python
+'''② apply()函数主要用于对DataFrame中的某一column或row中的元素执行相同的函数操作。'''
+# 对C1列中的每一个元素加1
+df["C1"].apply(lambda x:x+1)
+# 对第1行的每一个元素加1
+df.loc[1].apply(lambda x:x+1)
+# 对df表中的每一个元素加1
+df.apply(lambda x:x+1)
+
+
+def apply_age(x,bias):
+    return x+bias
+#以元组的方式传入额外的参数
+data["age"] = data["age"].apply(apply_age,args=(-3,))
+
+
+## DataFrame中axis的概念:axis=0代表操作对列columns进行，axis=1代表操作对行row进行
+# 沿着0轴求和
+data[["height","weight","age"]].apply(np.sum, axis=0)
+# 沿着0轴取对数
+data[["height","weight","age"]].apply(np.log, axis=0)
+```
+
+```python
+'''③ applymap()函数用于对DataFrame中的每一个元素执行相同的函数操作。'''
+# 对df表中的每一个元素加1
+df.applymap(lambda x:x+1)
 ```
 
