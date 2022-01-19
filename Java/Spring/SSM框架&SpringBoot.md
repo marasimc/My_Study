@@ -55,7 +55,7 @@ main目录下包含三个部分：
 
 ## 2.1 src/main/java源码目录
 
-<img src="Java/image/1.jpg" style="zoom:67%;" />
+<img src="image/1.jpg" style="zoom:40%;" />
 
 目录下的包文件里将代码分成了四个部分 ***controller、mapper、model、service***。在SSM框架中注解类发挥极大的作用，通过注解标注了各个部分的功能及依赖关系。
 
@@ -104,7 +104,7 @@ public class Book {
 
 ## 2.2 src/main/resources资源目录
 
-<img src="Java/image/2.jpg" style="zoom:67%;" />
+<img src="image/2.jpg" style="zoom:40%;" />
 
 resources目录主要保存SSM框架的各个配置文件。SSM框架通过扫描这些配置文件获取框架的一些配置信息。一般来说会将配置信息放在一个xml文件中，上图将其细分成了多个。
 applicationContext.xml为扫描的主要文件，包含了其他配置文件的位置信息，使得项目运行时能找到要扫描的其他配置。
@@ -126,7 +126,7 @@ SpringBoot基于SSM，封装了很多常用的工具和依赖，使得项目开�
 
 新建SpringBoot项目可以通过IDEA进行配置然后下载依赖包，也可以从官网[http://start.spring.io](https://link.zhihu.com/?target=http%3A//start.spring.io)配置然后下载项目初始框架的压缩包。
 
-<img src="Java/image/3.jpg" style="zoom:67%;" />
+<img src="image/3.jpg" style="zoom:20%;" />
 
 SpringBoot框架的项目目录与SSM框架基本相同，多出来的那些带有mvn字样的文件是用来匹配不同版本Maven的，可以暂时忽略。
 
