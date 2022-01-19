@@ -73,3 +73,46 @@ if os.path.exists(dirs):
         print('我是一个目录')
 ```
 
+# 5. 重启程序
+
+```python
+import os
+import numpy as np
+import cv2
+
+THS_name = '同花顺(v9.10.20) - 1号方案'
+
+def restart_THS():
+    def is_same(img1, img22):
+        image1 = (cv2.imread(img1))[500:1000,:]
+        image2 = (cv2.imread(img22))[500:1000,:]
+        difference = cv2.subtract(image1, image2)
+        # print(difference)
+        result = not np.any(difference) #if difference is all zeros it will return False
+        
+        return result
+
+    try:
+        # 关闭原程序
+        os.system('taskkill /f /t /im '+'hexin.exe')
+    except:
+        pass
+	#启动进程
+    os.startfile(r"C:/同花顺软件/同花顺/hexin.exe")
+
+    test = Win_api_handler(THS_name)
+    t1 = time.time()
+    while True:
+        try: 
+            hwnd = test.get_hwnd()
+            # time.sleep(1)
+            test.window_capture(hwnd, 'page_1.png')
+
+            if is_same('page.png', 'page_1.png'):   # 对比正常启动后的图片与当前截取到的图片，来判断是否已经完成启动
+                break
+        except:
+            pass
+
+    print('用时：', time.time()-t1)
+```
+

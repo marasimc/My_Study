@@ -151,3 +151,23 @@ if __name__ in "__main__":
     get_hwnds_for_pid(传入PID值)  # 传入PID值后返回句柄ID
 ```
 
+# 6. 根据进程的模糊名字获取其完整名字
+
+```python
+import win32gui
+
+hwnd_title = dict()
+
+def get_all_hwnd(hwnd,mouse):
+    if win32gui.IsWindow(hwnd) and win32gui.IsWindowEnabled(hwnd) and win32gui.IsWindowVisible(hwnd):
+        hwnd_title.update({hwnd:win32gui.GetWindowText(hwnd)})
+win32gui.EnumWindows(get_all_hwnd, 0)
+
+THS_name = ''
+for h,t in hwnd_title.items():
+    if str(t).find('同花顺')!=-1:
+        THS_name = t
+
+print(THS_name)
+```
+
