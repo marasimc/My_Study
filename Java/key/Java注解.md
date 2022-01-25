@@ -35,16 +35,3 @@ Java 定义了一套注解，共有 7 个，3 个在 java.lang 中，剩下 4 �
 @SuppressWarnings -- @SuppressWarnings 所标注内容产生的警告，编译器会对这些警告保持静默。
 ```
 
-# **@Resource和@Autowired注解**
-
-@Resource和@Autowired注解都是用来实现依赖注入的。只是@AutoWried按by type自动注入，而@Resource默认按byName自动注入。
-
-@Resource有两个重要属性，分别是name和type
-
-spring将name属性解析为bean的名字，而type属性则被解析为bean的类型。所以如果使用name属性，则使用byName的自动注入策略，如果使用type属性则使用byType的自动注入策略。如果都没有指定，则通过反射机制使用byName自动注入策略。
-
-@Resource依赖注入时查找bean的规则：(以用在field上为例)
-
-1. 既不指定name属性，也不指定type属性，则自动按byName方式进行查找。如果没有找到符合的bean，则回退为一个原始类型进行查找，如果找到就注入。
-
-此时name是变量名
