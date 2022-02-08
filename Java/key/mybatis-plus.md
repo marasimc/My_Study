@@ -173,7 +173,11 @@ IPage<Map<String, Object>> selectMapsPage(IPage<T> page, @Param(Constants.WRAPPE
 Integer selectCount(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
 ```
 
-## 5. 示例：
+## 5. MetaObjectHandler
+
+MetaObjectHandler接口是mybatisPlus为我们提供的的一个扩展接口，我们可以利用这个接口在我们插入或者更新数据的时候，为一些字段指定默认值。实现这个需求的方法不止一种，在sql层面也可以做到，在建表的时候也可以指定默认值。
+
+## 6. 示例：
 
 ① 实体类：
 
