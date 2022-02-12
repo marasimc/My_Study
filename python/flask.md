@@ -127,3 +127,177 @@ if request.method == "POST":
          comment = request.values.get("content")
 ```
 
+## 2.5 requests模块发送post请求，flask开启服务接收请求
+
+```python
+import requests
+import json
+ 
+ 
+if __name__ == '__main__':
+    url = 'http://127.0.0.1:5000'
+    data = {"imageId": "xxxx", "base64Data": "xxxx", "format": "jpg", "url": "xxxxx"}
+    data = json.dumps(data)
+    r = requests.post(url, data=data)
+    print(r.text)
+```
+
+```python
+from flask import Flask,request
+app = Flask(__name__)
+ 
+ 
+@app.route("/", methods=["POST"])
+def view_func_2():
+ 
+    data = request.get_json()
+    if data:
+        pass
+    else:
+        data = request.get_data()
+        data = json.loads(data)
+ 
+    imageId = data["imageId"]
+    base64Data = data["base64Data"]
+    format = data["format"]
+    url = data["url"]
+ 
+    print(data)
+    print(imageId)
+    print(base64Data)
+    print(format)
+    print(url)
+    return "OK"
+ 
+if __name__ == '__main__':
+    app.run(host="0.0.0.0",port=5000)
+```
+
+# 3. flask上下文全局变量
+
+| 变量名      | 上下文     | 说明                                                         |
+| ----------- | ---------- | ------------------------------------------------------------ |
+| current_app | 程序上下文 | 当前激活的程序实例，比如helloworld例子中的app                |
+| g           | 程序上下文 | 用作处理请求时的临时存储，每次请求都重设                     |
+| request     | 请求上下文 | 请求对象，包含了客户端HTTP请求的内容，例如获取客户端请求报文头部中包含的<br/>User-Agent信息：request.headers.get("User-Agent") |
+| session     | 请求上下文 | 用户会话，字典格式，存储请求间需要记住的信息                 |
+
+# 4. 设置、获取、删除cookie
+
+1. 设置cookie：
+
+```python
+'''
+设置cookie,默认有效期是临时cookie,浏览器关闭就失效
+可以通过 max_age 设置有效期， 单位是秒
+'''
+
+resp = make_response("success")  # 设置响应体
+resp.set_cookie("Itcast_1", "python_1", max_age=3600)
+```
+
+  2.获取cookie
+
+```python
+'''
+获取cookie，通过reques.cookies的方式， 返回的是一个字典，可以获取字典里的相应的值
+'''
+
+cookie_1 = request.cookies.get("Itcast_1")
+```
+
+3.删除cookie
+
+```python
+'''
+这里的删除只是让cookie过期，并不是直接删除cookie
+删除cookie，通过delete_cookie()的方式， 里面是cookie的名字
+'''
+
+resp = make_response("del success")  # 设置响应体
+resp.delete_cookie("Itcast1")
+```
+eg.
+
+```python
+from flask import Flask, make_response, request
+ 
+app = Flask(__name__)
+ 
+ 
+@app.route("/set_cookie")
+def set_cookie():
+    resp = make_response("success")
+    '''
+        设置cookie,默认有效期是临时cookie,浏览器关闭就失效
+        可以通过 max_age 设置有效期， 单位是秒
+    '''''
+    resp.set_cookie("Itcast_1", "python_1")
+    resp.set_cookie("Itcast_2", "python_2")
+    resp.set_cookie("Itcast_3", "python_3", max_age=3600)
+    return resp
+ 
+ 
+@app.route("/get_cookie")
+def get_cookie():
+    """
+        获取cookie，通过reques.cookies的方式，
+        返回的是一个字典，可以用get的方式
+    """
+    cookie_1 = request.cookies.get("Itcast_1")  # 获取名字为Itcast_1对应cookie的值
+    return cookie_1
+ 
+ 
+@app.route("/delete_cookie")
+def delete_cookie():
+    """
+        删除cookie，通过delete_cookie()的方式，
+        里面是cookie的名字
+        这里的删除只是让cookie过期，并不是直接删除cookie
+    """
+    resp = make_response("del success")
+    resp.delete_cookie("Itcast1")
+    return resp
+ 
+ 
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+# 5. 并行运行多个flask应用程序
+
+eg.
+
+```python
+import threading
+from flask import Flask
+
+# ./media is a folder that holds my JS, Imgs, CSS, etc.
+
+app1 = Flask(__name__, static_folder='./media')
+app2 = Flask(__name__, static_folder='./media')
+
+@app1.route('/')
+def index1():
+	return 'Hello World 1'
+
+@app2.route('/')
+def index2():
+	return 'Hello World 2'
+
+# With Multi-Threading Apps, YOU CANNOT USE DEBUG!
+# Though you can sub-thread.
+def runFlaskApp1():
+	app1.run(host='127.0.0.1', port=5000, debug=False, threaded=True)
+
+def runFlaskApp2():
+	app2.run(host='127.0.0.1', port=5001, debug=False, threaded=True)
+
+if __name__ == '__main__':
+    # Executing the Threads seperatly.
+    t1 = threading.Thread(target=runFlaskApp1)
+    t2 = threading.Thread(target=runFlaskApp2)
+    t1.start()
+    t2.start()
+```
+
