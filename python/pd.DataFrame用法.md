@@ -118,3 +118,26 @@ data[["height","weight","age"]].apply(np.log, axis=0)
 df.applymap(lambda x:x+1)
 ```
 
+# 4. DataFrame新增列的方法
+
+```python
+import pandas as pd
+
+data = pd.DataFrame()
+
+''' 1. insert()方法 '''
+data.insert(data.shape[1], 'd', [0,0])
+
+''' 2. obj[‘col’] = value 方法 '''
+data['d'] = [0,0]
+
+''' 3. reindex 方法 '''
+data = data.reindex(columns=['a', 'b', 'c', 'd'], fill_value=0)
+
+''' 4. concat 方法 '''
+data = pd.concat([data, pd.DataFrame(columns=['d'])], sort=False)
+
+''' 5. loc 方法 '''
+data.loc[:, 'd'] = 0
+```
+

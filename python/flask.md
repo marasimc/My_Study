@@ -301,3 +301,45 @@ if __name__ == '__main__':
     t2.start()
 ```
 
+# 6. 返回数据
+
+```python
+# 方法一：返回一般的字典类型数据
+import json
+
+data = {'test': 1}
+@app.route('/', methods=['GET'])
+def get_tasks():
+	return json.dumps({'data':data}, ensure_ascii=False)  # ensure_ascii=False 是为了保证中文显示不乱码
+```
+
+```python
+# 方法二：返回任意类型的数据，包括列表，字典
+
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False  # 保证中文显示不乱码
+
+tasks = [
+    {
+        'id': 1,
+        'title': u'订阅 python_mastery 专栏',
+        'description': u'专栏Link： https://xiaozhuanlan.com/python_mastery'
+    },
+    {
+        'id': 2,
+        'title': u'订阅 pythonml 专栏',
+        'description': u'专栏Link： https://xiaozhuanlan.com/pythonml'
+    }
+]
+
+@app.route('/', methods=['GET'])
+def get_tasks():
+    return jsonify({'tasks': tasks})
+    # return json.dumps({'task:', tasks})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
