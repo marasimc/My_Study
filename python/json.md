@@ -49,3 +49,20 @@ json.loads(json_str)中，
 """
 ```
 
+```python
+import json
+
+# 读取json文件内容,返回字典格式
+with open('./source_file/info.json','r',encoding='utf8')as fp:
+    json_data = json.load(fp)
+    print('这是文件中的json数据：',json_data)
+    print('这是读取到文件数据的数据类型：', type(json_data))
+    
+    
+# 将字典数据写入到json文件中
+dict1 = {'name': '张三', 'age': 18, 'sex': '男'}
+with open('./source_file/info.json','a',encoding='utf8')as fp:
+    json.dump(dict1,fp,ensure_ascii=False)　　
+ #  如果ensure_ascii ' '为false，则返回值可以包含非ascii值
+```
+

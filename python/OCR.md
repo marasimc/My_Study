@@ -1,6 +1,6 @@
 # OCR工具
 
-## cnocr
+## cnocr  -- 中文
 
 ```python
 from cnocr import CnOcr
@@ -12,7 +12,7 @@ print("Predicted Chars:", res)
 
 
 
-## paddleocr
+## paddleocr  
 
 ```python
 import paddlehub as hub 
@@ -23,3 +23,22 @@ result = ocr.recognize_text(images=[cv2.imread('test1.png')])
 print(result)
 ```
 
+
+
+## easyocr
+
+```python
+import easyocr
+# 创建reader对象
+reader = easyocr.Reader(['ch_sim', 'en']) 
+# 读取图像
+result = reader.readtext('test1.png')
+# 结果
+print(list(result))
+```
+
+
+
+## Chineseocr-lite
+
+https://github.com/DayBreak-u/chineseocr_lite
