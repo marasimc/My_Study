@@ -81,6 +81,7 @@ for result in results:
 ```python
 results = collection.find({'age': {'$gt': 20}})
 results = collection.find({'name': {'$regex': '^M.*'}})
+results = collection.find({'_id': {"$gt": start_date, "$lt": end_date}}).sort('_id', pymongo.ASCENDING)   # 升序排序
 ```
 
 | 符号 | 含义       | 示例                        |

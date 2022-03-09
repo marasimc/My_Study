@@ -141,3 +141,9 @@ data = pd.concat([data, pd.DataFrame(columns=['d'])], sort=False)
 data.loc[:, 'd'] = 0
 ```
 
+# 5. 将df中为nan的值替换为指定的值
+
+```python
+df = df.where((pre_df.notna()),'')
+```
+
