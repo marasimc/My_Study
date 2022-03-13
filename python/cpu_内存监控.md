@@ -9,6 +9,7 @@ import time
 import string
 
 import xlrd
+import xlwt
 from xlutils.copy import copy
 
 
@@ -48,6 +49,10 @@ def countProcessMemoey(processName):
 
 
 if __name__ == '__main__':
+    book = xlwt.Workbook()
+    sheet = book.add_sheet('sheet1')   #新建sheet
+    book.save('monitor_python.xls')
+    
     # 进程名
     ProcessName = 'python2.exe'
     x = 0
