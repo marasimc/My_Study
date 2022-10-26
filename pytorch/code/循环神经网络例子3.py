@@ -25,6 +25,9 @@ y_data = [3,1,2,3,2]    # 表示 ohlol
 inputs = torch.LongTensor(x_data)
 labels = torch.LongTensor(y_data)
 
+print(inputs)
+input = torch.unsqueeze(inputs,dim=1)  
+print(input, input.shape)
 
 class Model(torch.nn.Module):
     def __init__(self):
@@ -36,9 +39,14 @@ class Model(torch.nn.Module):
     
     def forward(self, x):
         hidden = torch.zeros(num_layers, x.size(0), hidden_size)   # 构造隐层h0
+        print(x.shape)
         x = self.emb(x)
+        print(x.shape)
         x, _ = self.rnn(x, hidden)
+        print(x.shape)
         x = self.fc(x)
+        print(x.shape)
+        print(x.view(-1, num_class).shape)
         return x.view(-1, num_class)  # reshape to (seqlen X batchSize, hidden_size)
     
 
@@ -64,4 +72,6 @@ def train():
         print('predicted string:',''.join([idx2char[x] for x in idx]), end='')
         print(', Epoch[%d/15] loss = %.4f' % (epoch+1, loss.item()))
 
-train()
+# train()
+
+net(inputs)
