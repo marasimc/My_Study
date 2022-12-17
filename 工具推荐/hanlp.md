@@ -141,7 +141,7 @@ Dep Tree     Tok 	Relation
 '''
 ```
 
-![image-20221213120205683](assets/hanlp/image-20221213120205683.png)
+<img src="./assets/hanlp/image-20221213120205683.png">
 
 ## 5. 成分句法分析（Constituency Parsing、CON）
 
